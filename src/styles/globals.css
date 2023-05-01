@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #282c34;
+    overflow: hidden;
+  }
+  
+  .App {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  .App header {
+    background-color: rgb(15, 10, 34);
+    height: 10vh;
+    min-height: 50px;
+    color: white;
+    position: fixed;
+    width: 100%;
+    max-width: 720px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .App section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: rgba(10, 8, 17, 0.616);
+  }
+  
+  main {
+    padding: 10px;
+    height: 80vh;
+    margin: 10vh 0 10vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+  
+  main::-webkit-scrollbar-track {
+    background: #1e1e24;
+  }
+  
+  main::-webkit-scrollbar-thumb {
+    background: #3508b1;
+  }
+  
+  form {
+    height: 10vh;
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(24, 23, 23);
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    font-size: 1.5rem;
+  }
+  
+  form button {
+    width: 20%;
+    background-color: #ee5c08;
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
+    padding: 0 10px;
+  }
+  
+  
+  input {
+    line-height: 1.5;
+    width: 100%;
+    font-size: 1.5rem;
+    background: rgb(29, 29, 29);
+    color: white;
+    outline: none;
+    border: none;
+    padding: 0 10px;
+  }
+  
+  button {
+    background-color: #282c34; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 1.25rem;
+  }
+  
+  
+  .sign-out {
+    color: white;
+    background: #282c34;
+    max-width: 240px;
+    font-size: 20px;
+  }
+  .sign-in {
+    max-width: 240px;
+    font-size: 20px;
+  }
+  
+  
+  
+  
+  ul, li {
+    text-align: left;
+    list-style: none;
+  }
+  
+  h1 {
+    color: white;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .sent {
+    flex-direction: row-reverse;
+  }
+  n{font-size: 15px;  max-width: 60%; align-self: flex-end;}
+  t{font-size: 12px;  max-width: 60%; align-self: flex-end;text-align: center;}
+  
+  
+  .sent p {
+    color: white;
+    background: #ee5c08;
+    align-self: flex-end;
+    font-size: 20px;
+    height: auto;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 60%;
+    word-wrap: break-word;
+    text-align: left;
+  }
+  .received p {
+    background: #2f2b36;
+    color: white;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 60%;
+    word-wrap: break-word;
+    text-align: left;
+  }
+  
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 2px 5px;
+  }
+    
