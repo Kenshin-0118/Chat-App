@@ -42,7 +42,8 @@ function Chatlist() {
 setTxtMessage('')
   }
 
-  return (<>
+  return (
+  <div>
     <main>
 
       {messages && messages.map((message) => <ChatMessage key={message.id} message = {message}/>)}
@@ -50,14 +51,7 @@ setTxtMessage('')
       <div ref={autoscroll} id="bottom"/>
 
     </main>
-    <form  onSubmit={sendMessage}>
-
-      <input value={TxtMessage} onChange={(e) => setTxtMessage(e.target.value)} placeholder="Enter Message" />
-
-      <button className='bg-orange-600' type="submit">Send</button>
-
-    </form>
-  </>)
+  </div>)
 }
 
 

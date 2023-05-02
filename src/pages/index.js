@@ -4,9 +4,8 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"
 import firebase from 'firebase/app';
-import ChatRoom from './Users';
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where, doc, getDocs} from 'firebase/firestore'
-
+import Interface from './Interface'
 
 
 
@@ -60,8 +59,8 @@ function MainStream() {
       </header>
 
       <section>
-        {user ? <ChatRoom/> : <Interface />}
-      </section>
+    {user ? (<Interface/>) : (<Login />)}
+  </section>
 
     </div>
   );
@@ -96,7 +95,7 @@ const Logout= () => {
     <div  ><button className="sign-out text-center" onClick={() => auth.signOut()}>Sign Out</button></div>
   )
 }
-const Interface = () => {
+const Login = () => {
   return (
     <>
       <h1>

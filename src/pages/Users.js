@@ -1,10 +1,6 @@
 import React, { useRef, useState, useEffect} from 'react'
-import firebase from 'firebase/app';
-import { auth, db } from './firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
-import GoogleButton from "react-google-button"
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp} from 'firebase/firestore'
+import { db } from './firebase'
+import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 
 
 function Users() {
@@ -24,14 +20,17 @@ function Users() {
     },[])
   
     return (
-      <div>
-        <h1>All Users</h1>
+      <div className='flex-grow h-full flex-col'>
+        <div className=''>Users</div>
           {Accounts && Accounts.map((users) => (
-            <li className='bg-purple-900  m-10' key={users.uid}>
-              <h1>Username: {users.Name}<br/>Email: {users.email}<br/>User Id: {users.uid}</h1>
+            <li className='bg-purple-100 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={users.uid}>
+              <div className='w-1/5'><img className='p-1' src={users.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
+              <div className='w-4/5 text-bold text-3xl'>{users.Name}</div>
+              
             </li>
           ))}
       </div>
+      
     );
 }
 
