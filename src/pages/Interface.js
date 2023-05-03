@@ -31,11 +31,12 @@ function Interface(settext) {
     <div className="">
       <div className='ml-[30px] flex-grow h-[7vh] font-bold text-left text-4xl w-full py-3'>{menu}</div>
         <main className='flex-grow h-[73vh]' >{getMenu()}</main>
-        <div className='footer fixed bottom-0 w-full h-[10vh] max-w-[720px]'>
-            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500 px-2' value={'Messages'} onClick={changeMenu} type="submit">Chat</button>
-            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500' value={'Groups'} onClick={changeMenu} type="submit">Group</button>
-            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500' value={'Users'} onClick={changeMenu} type="submit">Users</button>
-        </div>
+        <div className='footer fixed bottom-0 w-full max-w-[720px] py-2 px-2 flex justify-between'>
+  <button className='bg-orange-700 w-1/3 h-[8vh] hover:bg-orange-500 rounded' value={'Messages'} onClick={changeMenu} type="submit">Chat</button>
+  <button className='bg-orange-700 w-1/3 h-[8vh] hover:bg-orange-500 rounded mx-2' value={'Groups'} onClick={changeMenu} type="submit">Group</button>
+  <button className='bg-orange-700 w-1/3 h-[8vh] hover:bg-orange-500 rounded' value={'Users'} onClick={changeMenu} type="submit">Users</button>
+</div>
+
 
     </div>
   );
