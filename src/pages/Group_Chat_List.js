@@ -21,7 +21,6 @@ function Groups() {
   
     return (
       <div className='flex-grow h-full flex-col'>
-        <div className=''>Users</div>
           {Accounts && Accounts.map((users) => (
             <li className='bg-purple-100 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={users.uid}>
               <div className='w-1/5'><img className='p-1' src={users.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>

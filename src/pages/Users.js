@@ -6,7 +6,7 @@ import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 function Users() {
     const [Accounts, setAccounts] = useState([]);
     useEffect(()=>{
-      const que = query(collection(db,"users"),orderBy('created'));
+      const que = query(collection(db,"users"),orderBy('Name'));
       const Unsubscribe = onSnapshot(que, (querySnapshot)=>{
         let Accounts = []
         querySnapshot.forEach((doc) => {
@@ -21,12 +21,14 @@ function Users() {
   
     return (
       <div className='flex-grow h-full flex-col'>
-        <div className=''>Users</div>
-          {Accounts && Accounts.map((users) => (
+          {Accounts && Accounts.map((users,index) => (
             <li className='bg-purple-100 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={users.uid}>
               <div className='w-1/5'><img className='p-1' src={users.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
-              <div className='w-4/5 text-bold text-3xl'>{users.Name}</div>
-              
+              <div className='w-3/5 text-bold text-3xl'>{users.Name}</div>
+              <div className='w-1/5 text-bold text-3xl mt-[-12px] items-center flex'>
+              <button onClick={() =>userClicked(index)} className="mt-3 shadow bg-orange-500 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                Message
+              </button></div>
             </li>
           ))}
       </div>

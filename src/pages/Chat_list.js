@@ -1,84 +1,53 @@
 import React, { useRef, useState, useEffect} from 'react'
-import { auth, db } from './firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
-import GoogleButton from "react-google-button"
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp} from 'firebase/firestore'
+import { db } from './firebase'
+import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 
 
-function Chatlist() {
-  const autoscroll = useRef(0);
-  useEffect(() => autoscroll.current.scrollIntoView({behavior: 'smooth'}));
+function ChatList() {
   const [messages, setMessages] = useState([]);
-  useEffect(()=>{
-    const que = query(collection(db,"messages"),orderBy('created'));
-    const Unsubscribe = onSnapshot(que, (querySnapshot)=>{
-      let messages = []
-      querySnapshot.forEach((doc) => {
-        messages.push({...doc.data(), id: doc.id})
-      })
-      setMessages(messages)
-    })
-    return () => Unsubscribe
+  
+  const collectionRef = query(collection(db,"messages"),orderBy('created', "desc"));
 
-  },[])
+  // Listen for changes in the collection
+  onSnapshot(collectionRef, (querySnapshot) => {
+    // Reduce the query snapshot to an object with one message per UID
+    const messagesByUid = querySnapshot.docs.reduce((acc, doc) => {
+      const message = { id: doc.id, ...doc.data() };
+      // Check if the UID is already in the object
+      if (!acc[message.uid]) {
+        // If not, add the message to the object under the UID key
+        acc[message.uid] = message;
+      }
+      return acc;
+    }, {});
+  
+    // Convert the object to an array of values
+    const messagesArray = Object.values(messagesByUid);
+  
+    // Set the state with the array of messages
+    setMessages(messagesArray);
+  });
 
-  const [TxtMessage, setTxtMessage] = useState('');
-
-  const sendMessage = async(e) => {
-    e.preventDefault()
-    if (TxtMessage === '') {
-      alert('Please Enter Message in the Text Field')
-      return;
-    }
-    const { uid, photoURL,displayName } = auth.currentUser
-     await addDoc(collection(db, 'messages'), {
-      Text: TxtMessage,
-      Name: displayName,
-      created: serverTimestamp(),
-      uid,
-      photoURL
-    });
-setTxtMessage('')
+  function limittext(message){
+    return String(message).length > 60 ? message.slice(0,60) + " . . . " : message;
   }
-
-  return (
-  <div>
-    <main>
-
-      {messages && messages.map((message) => <ChatMessage key={message.id} message = {message}/>)}
-
-      <div ref={autoscroll} id="bottom"/>
-
-    </main>
-  </div>)
+  
+    return (
+      <div>
+        <div className=''>        
+            {messages.map((chat,index) => (
+              <li className='bg-purple-100 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={chat.uid}>
+                <div className='w-1/5'><img className='p-1' src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
+                <div className='w-4/5'>
+                  <div className='bold text-2xl'>{chat.Name}</div>
+                  <div className='italic text-md'>{limittext(chat.Text)}</div>
+                </div>
+              </li>
+            ))}
+        </div>
+      </div>
+    );
 }
 
 
-function ChatMessage({message}) {
-   const messageClass = 
-  message.uid === auth.currentUser.uid
-  ? `sent`
-  : `received`
-  // eslint-disable-next-line
-function getdatetime(timestamp){
-  if(timestamp == null){
-    const text2 = String(Date.now());
-    const text3 = text2.slice(4, 21);
-    return text3;
-  }
-  else if(timestamp != null){
-  const text2 = String((timestamp).toDate());
-  const text3 = text2.slice(4, 21);
-  return text3;
-}
-}
-  return (<div ><div className={`message ${messageClass} mt-5`}>
-      <img src={message.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/>
-      <p><n><i>{message.Name}</i></n><br/>{message.Text}<br/><t><i>{ getdatetime(message.created)}</i></t></p>
-  </div></div>)
-}
-
-
-export default Chatlist;
-
+export default ChatList;

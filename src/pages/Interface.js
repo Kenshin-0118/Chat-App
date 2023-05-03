@@ -11,31 +11,30 @@ import GroupList from './Group_Chat_List'
 
 
 
-function Interface() {
-  const [menu, setMenu] = useState(2);
-  const [component, setComponent] = useState('chat');
+function Interface(settext) {
+  const [menu, setMenu] = useState('Messages');
   function changeMenu(event) {
-    setMenu(parseInt(event.target.value));
+    setMenu(event.target.value)
   }
-
   function getMenu() {
     switch (menu) {
       // eslint-disable-next-line
-      case 0: return <ChatList/>; break;
+      case 'Messages': return <ChatList/>; break;
       // eslint-disable-next-line
-      case 1: return <Users/>; break;
+      case 'Groups': return <GroupList/>; break;
       // eslint-disable-next-line
-      case 2: return <GroupList/>; break;
+      case 'Users': return <Users/>; break;
       default: return 'Error 404: Page not found';
     }
   }
   return (
-    <div className="App w-full h-full">
-        <div className='flex-grow overflow-y-auto' >{getMenu()}</div>
-        <div className='footer fixed bottom-0 w-full max-w-[720px]'>
-            <button className='bg-orange-700 w-1/3 hover:bg-orange-500' value={0} onClick={changeMenu} type="submit">Chat</button>
-            <button className='bg-orange-700 w-1/3 hover:bg-orange-500' value={2} onClick={changeMenu} type="submit">Group</button>
-            <button className='bg-orange-700 w-1/3 hover:bg-orange-500' value={1} onClick={changeMenu} type="submit">Users</button>
+    <div className="">
+      <div className='ml-[30px] flex-grow h-[7vh] font-bold text-left text-4xl w-full py-3'>{menu}</div>
+        <main className='flex-grow h-[73vh]' >{getMenu()}</main>
+        <div className='footer fixed bottom-0 w-full h-[10vh] max-w-[720px]'>
+            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500 px-2' value={'Messages'} onClick={changeMenu} type="submit">Chat</button>
+            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500' value={'Groups'} onClick={changeMenu} type="submit">Group</button>
+            <button className='bg-orange-700 w-1/3 h-[10vh] hover:bg-orange-500' value={'Users'} onClick={changeMenu} type="submit">Users</button>
         </div>
 
     </div>

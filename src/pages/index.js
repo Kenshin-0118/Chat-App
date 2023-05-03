@@ -12,6 +12,7 @@ import Interface from './Interface'
 function MainStream() {
   const [user] = useAuthState(auth);
   console.log(user)
+  const [text,settext] = useState("Chat App Project")
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async user => {
@@ -54,12 +55,12 @@ function MainStream() {
   return (
     <div className="App">
       <header>
-        <div className='font-bold text-3xl'>Chat App Project</div>
+        <div className='font-bold text-3xl'>{text}</div>
         {user ? <Logout/> : <SignIn />}
       </header>
 
       <section>
-    {user ? (<Interface/>) : (<Login />)}
+    {user ? (<Interface settext = {settext}/>) : (<Login />)}
   </section>
 
     </div>
