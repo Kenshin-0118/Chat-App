@@ -10,11 +10,14 @@ import ChatList from './Chat_list'
 import GroupList from './Group_Chat_List'
 import Create_G from './Create_Group'
 import Join_G from './Join_Group'
+import Grouproom from './Grouproom'
+import Chatroom from './Chatroom'
 
 
 
 function Interface(settext) {
   const [menu, setMenu] = useState('Messages');
+  const [grouptarget, setGroupTarget] = useState([]);
   function changeMenu(event) {
     setMenu(event.target.value)
   }
@@ -23,25 +26,29 @@ function Interface(settext) {
       // eslint-disable-next-line
       case 'Messages': return <ChatList/>; break;
       // eslint-disable-next-line
-      case 'Groups': return <GroupList/>; break;
+      case 'Groups': return <GroupList setMenu={setMenu} setGroupTarget={setGroupTarget}/>; break;
       // eslint-disable-next-line
       case 'Users': return <Users/>; break;
       // eslint-disable-next-line
-      case 'Create Group': return <Create_G/>; break;
+      case 'Create Group': return <Create_G setMenu={setMenu}/>; break;
       // eslint-disable-next-line
-      case 'Join Group': return <Join_G/>; break;
+      case 'Join Group': return <Join_G setMenu={setMenu}/>; break;
+      // eslint-disable-next-line
+      case 'Grouproom': return <Grouproom setMenu={setMenu}/>; break;
+      // eslint-disable-next-line
+      case 'Chatroom': return <Chatroom setMenu={setMenu}/>; break;
       default: return 'Error 404: Page not found';
     }
   }
   return (
     <div className="">
-      <div className='ml-[30px] w-[720px] flex h-[7vh] font-bold text-left text-4xl  py-3'>{menu}
+      <div className='ml-[30px] w-[720px] flex h-[7vh] font-bold text-white text-left text-4xl  py-3'>{menu}
       {menu === 'Groups' ?
       <div className='ml-[370px] flex-grow gap-5 items-right'>
-          <button value={'Join Group'} onClick={changeMenu} className='shadow bg-orange-500 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+          <button value={'Join Group'} onClick={changeMenu} className='shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Join
           </button> 
-          <button value={'Create Group'} onClick={changeMenu} className='ml-5 shadow bg-orange-500 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+          <button value={'Create Group'} onClick={changeMenu} className='ml-5 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Create
           </button>
         </div> 

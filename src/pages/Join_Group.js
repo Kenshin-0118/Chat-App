@@ -11,22 +11,23 @@ import GroupList from './Group_Chat_List'
 
 
 
-function Join() {
+function Join({setMenu}) {
     const [Name, setName] = useState('')
-
-  const CodeChange = (e) => {
-    setName('jgsa')
-}
+    function Cancel(event) {
+      setMenu('Groups')
+    }
 
   return (
-    <div className="flex justify-center flex-col items-center content-center h-full">
-          <div className="text-xl">
-                <input className=" w-[400px] shadow pb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="code" placeholder="Group Code" onChange={CodeChange} id="username" type="text"/><br/>
-                <button className=" w-[200px] ml-[100px] mt-3 shadow bg-blue-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
+          <div className="text-xl flex justify-center flex-col items-center h-full w-full">
+            <div className="text-2xl font-bold flex justify-center flex-col items-center text-gray-500">Enter Group Code to<br/>Join Existing Chat Group</div><br/>
+              <input className=" w-[450px] shadow pb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="code" placeholder="Group Code" onChange={(e) => setName(e.target.value)} id="username" type="text"/>
+              <button className=" w-[200px] mt-3 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
                   Join Group
-                </button>
-             </div>
-</div>
+              </button>
+              <button onClick={Cancel} className=" w-[200px] mt-3 shadow bg-gray-600 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
+                  Cancel
+              </button>
+          </div>
   );
 }
 

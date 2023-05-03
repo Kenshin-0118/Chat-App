@@ -36,11 +36,11 @@ function ChatList() {
       <div>
         <div className=''>        
             {messages.map((chat,index) => (
-              <li className='bg-purple-100 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={chat.uid}>
+              <li className='bg-neutral-800 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={chat.uid}>
                 <div className='w-1/5'><img className='p-1' src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
                 <div className='w-4/5'>
-                  <div className='bold text-2xl'>{chat.Name}</div>
-                  <div className='italic text-md'>{limittext(chat.Text)}</div>
+                  <div className='bold text-2xl text-white'>{chat.Name}</div>
+                  <div className='italic text-md text-white'>{limittext(chat.Text)}</div>
                 </div>
               </li>
             ))}
