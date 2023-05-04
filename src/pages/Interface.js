@@ -34,7 +34,7 @@ function Interface(settext) {
       // eslint-disable-next-line
       case 'Join Group': return <Join_G setMenu={setMenu}/>; break;
       // eslint-disable-next-line
-      case 'Grouproom': return <Grouproom setMenu={setMenu}/>; break;
+      case 'Grouproom': return <Grouproom setMenu={setMenu} grouptarget={grouptarget}/>; break;
       // eslint-disable-next-line
       case 'Chatroom': return <Chatroom setMenu={setMenu}/>; break;
       default: return 'Error 404: Page not found';
@@ -42,13 +42,15 @@ function Interface(settext) {
   }
   return (
     <div className="">
-      <div className='ml-[30px] w-[720px] flex h-[7vh] font-bold text-white text-left text-4xl  py-3'>{menu}
-      {menu === 'Groups' ?
-      <div className='ml-[370px] flex-grow gap-5 items-right'>
-          <button value={'Join Group'} onClick={changeMenu} className='shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+      <div className='flex'>
+      <div className='ml-[30px] w-1/2 flex h-[7vh] font-bold text-white text-left text-4xl  py-3'>{menu}
+      
+      </div>{menu === 'Groups' ?
+      <div className='w-1/2 flex-grow items-right py-2 px-2 justify-between' >
+          <button value={'Join Group'} onClick={changeMenu} className='w-2/5 mr-[5px] shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Join
           </button> 
-          <button value={'Create Group'} onClick={changeMenu} className='ml-5 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+          <button value={'Create Group'} onClick={changeMenu} className='w-2/5 ml-[5px] shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Create
           </button>
         </div> 

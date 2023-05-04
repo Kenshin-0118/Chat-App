@@ -3,15 +3,15 @@ import { auth, db } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp} from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp,where} from 'firebase/firestore'
 
 
-function Chatroom() {
+function Grouproom({grouptarget}) {
   const autoscroll = useRef(0);
   useEffect(() => autoscroll.current.scrollIntoView({behavior: 'smooth'}));
   const [messages, setMessages] = useState([]);
   useEffect(()=>{
-    const que = query(collection(db,"messages"),orderBy('created'));
+    const que = query(collection(db,"group_messages"),where('Group_ID', '==', grouptarget.Group_ID),orderBy('created'));
     const Unsubscribe = onSnapshot(que, (querySnapshot)=>{
       let messages = []
       querySnapshot.forEach((doc) => {
@@ -22,6 +22,7 @@ function Chatroom() {
     return () => Unsubscribe
 
   },[])
+  console.log('Messages: '+messages)
 
   const [TxtMessage, setTxtMessage] = useState('');
 
@@ -32,7 +33,8 @@ function Chatroom() {
       return;
     }
     const { uid, photoURL,displayName } = auth.currentUser
-     await addDoc(collection(db, 'messages'), {
+     await addDoc(collection(db, 'group_messages'), {
+      Group_ID: grouptarget.Group_ID,
       Text: TxtMessage,
       Name: displayName,
       created: serverTimestamp(),
@@ -86,4 +88,4 @@ function getdatetime(timestamp){
 }
 
 
-export default Chatroom;
+export default Grouproom;
