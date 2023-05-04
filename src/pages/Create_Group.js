@@ -17,20 +17,21 @@ function Create({setMenu}) {
       setMenu('Groups')
     }
 const usersRef = collection(db, "groups");
-async function addGroup() {
+async function CreateGroup() {
   const userRef = doc(usersRef); // generate new document reference with random ID
   const id = userRef.id; // get the ID of the new document
  const { uid,photoURL, displayName } = auth.currentUser
   try {
     await setDoc(userRef, {// use the ID as a field value
       Group_Name: Name,
-      Creator: displayName,
+      Name: displayName,
       created: serverTimestamp(),
-      Admin_Photo: photoURL,
-      Creator_ID:uid,
+      photoURL,
+      uid,
       Group_ID: id
     });
-    console.log("User added successfully!");
+    alert(Name+' Chatroom Created');
+    setMenu('Groups')
   } catch (error) {
     console.error("Error adding user: ", error);
   }
@@ -40,7 +41,7 @@ async function addGroup() {
     <div className="text-xl flex justify-center flex-col items-center h-full w-full">
       <div className="text-2xl font-bold flex justify-center flex-col items-center text-gray-500">Create New Group By<br/>Filling up Fields Below</div><br/>
         <input className=" w-[450px] shadow pb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="gname" placeholder="Group Name" onChange={(e) => setName(e.target.value)} id="username" type="text"/>
-        <button onClick={addGroup} value={Name} className=" w-[200px] mt-3 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
+        <button onClick={CreateGroup} value={Name} className=" w-[200px] mt-3 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
             Create Group
         </button>
         <button onClick={Cancel} className=" w-[200px] mt-3 shadow bg-gray-600 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">

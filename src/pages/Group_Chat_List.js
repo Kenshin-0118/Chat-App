@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect} from 'react'
-import { db } from './firebase'
-import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
+import { auth,db } from './firebase'
+import {collection, onSnapshot, orderBy, query, where} from 'firebase/firestore'
 
 
 function Groups({setMenu,setGroupTarget}) {
     const [Groups, setGroups] = useState([]);
     useEffect(()=>{
-      const que = query(collection(db,"groups"),orderBy('created'));
+      const { uid } = auth.currentUser
+      const que = query(collection(db,"groups"), where('uid', '==', uid),orderBy('created'));
       const Unsubscribe = onSnapshot(que, (querySnapshot)=>{
         let groups = []
         querySnapshot.forEach((doc) => {
