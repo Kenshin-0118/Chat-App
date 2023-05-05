@@ -28,7 +28,7 @@ function Groups({setMenu,setGroupTarget}) {
     return (
       <div className=''>        
       {Groups.map((group,index) => (
-        <li className='bg-neutral-800 text-white rounded-lg mr-3 ml-3 mb-3 items-center flex px-4 py-4' key={group.uid}>
+        <li className='bg-neutral-800 text-white rounded-lg mr-3 ml-3 mb-3 items-center flex px-4 py-4' key={group.Group_ID}>
           <div className='w-2/3'>
             <div className='bold text-2xl'>{group.Group_Name}</div>
             <div className='italic text-md'>{'Group ID: '+group.Group_ID}</div>

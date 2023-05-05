@@ -1,11 +1,14 @@
 import React, { useRef, useState, useEffect} from 'react'
-import { db } from './firebase'
+import { db,auth } from './firebase'
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 
 
-function ChatList() {
+function ChatList({setUserTarget,setMenu}) {
   const [messages, setMessages] = useState([]);
+  const { uid } = auth.currentUser
   
+  const mymessages = messages.filter(convo => convo.P1_ID == uid || convo.P2_ID == uid);
+  useEffect(() => {
   const collectionRef = query(collection(db,"messages"),orderBy('created', "desc"));
 
   // Listen for changes in the collection
@@ -14,9 +17,9 @@ function ChatList() {
     const messagesByUid = querySnapshot.docs.reduce((acc, doc) => {
       const message = { id: doc.id, ...doc.data() };
       // Check if the UID is already in the object
-      if (!acc[message.uid]) {
+      if (!acc[message.Convo_Id]) {
         // If not, add the message to the object under the UID key
-        acc[message.uid] = message;
+        acc[message.Convo_Id] = message;
       }
       return acc;
     }, {});
@@ -27,21 +30,45 @@ function ChatList() {
     // Set the state with the array of messages
     setMessages(messagesArray);
   });
+}, []);
 
   function limittext(message){
     return String(message).length > 60 ? message.slice(0,60) + " . . . " : message;
   }
+
+  const ConvoClicked=(index, user)=>{ 
+    if(user.P1_ID == uid){
+      setUserTarget({Target_Name: user.P2_Name, Target_uid: user.P2_ID,Target_photoURL:user.P2_PhotoURL, index: index})
+      setMenu('Chatroom')
+    }
+    else{
+      setUserTarget({Target_Name: user.P1_Name, Target_uid: user.P1_ID,Target_photoURL:user.P1_PhotoURL, index: index})
+      setMenu('Chatroom')
+    }
+    
+} 
   
     return (
       <div>
         <div className=''>        
-            {messages.map((chat,index) => (
-              <li className='bg-neutral-800 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={chat.uid}>
-                <div className='w-1/5'><img className='p-1' src={chat.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
+            {mymessages.map((chat,index) => (
+              <li onClick={() => ConvoClicked(index, chat)} className='bg-neutral-800 rounded-lg mr-3 ml-3 mb-3 items-center flex' key={chat.Convo_Id}>
+                {chat.uid == uid ?
+      <>
+                <div className='w-1/5'><img className='p-1' src={chat.P2_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
                 <div className='w-4/5'>
-                  <div className='bold text-2xl text-white'>{chat.Name}</div>
-                  <div className='italic text-md text-white'>{limittext(chat.Text)}</div>
+                  <div className='bold text-2xl text-white'>{chat.P2_Name}</div>
+                  <div className='italic text-md text-white'>You: {limittext(chat.Text)}</div>
                 </div>
+        </> 
+      : 
+      <>
+      <div className='w-1/5'><img className='p-1' src={chat.P1_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
+      <div className='w-4/5'>
+        <div className='bold text-2xl text-white'>{chat.P1_Name}</div>
+        <div className='italic text-md text-white'><b>{limittext(chat.Text)}</b></div>
+      </div>
+</> }
               </li>
             ))}
         </div>

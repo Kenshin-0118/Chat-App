@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect} from 'react'
 import { auth, db } from './firebase'
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp} from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where} from 'firebase/firestore'
 
 
-function Chatroom() {
+function Chatroom({usertarget}) {
   const autoscroll = useRef(0);
   useEffect(() => autoscroll.current.scrollIntoView({behavior: 'smooth'}));
   const [messages, setMessages] = useState([]);
   useEffect(()=>{
-    const que = query(collection(db,"messages"),orderBy('created'));
+    const { uid } = auth.currentUser
+    const que = query(collection(db,"messages"),where("Convo_Id", "in", [uid+usertarget.Target_uid, usertarget.Target_uid+uid]),orderBy("created"));
     const Unsubscribe = onSnapshot(que, (querySnapshot)=>{
       let messages = []
       querySnapshot.forEach((doc) => {
@@ -21,22 +22,51 @@ function Chatroom() {
   },[])
 
   const [TxtMessage, setTxtMessage] = useState('');
-
   const sendMessage = async(e) => {
     e.preventDefault()
     if (TxtMessage === '') {
       alert('Please Enter Message in the Text Field')
       return;
     }
+    if(messages.length == 0){
+      const { uid, photoURL,displayName } = auth.currentUser
+      await addDoc(collection(db, 'messages'), {
+       Convo_Id: uid+usertarget.Target_uid,
+       Text: TxtMessage,
+       Name: displayName,
+       created: serverTimestamp(),
+       uid,
+       photoURL,
+       P1_Name: displayName,
+       P1_ID: uid,
+       P1_PhotoURL:photoURL,
+       P2_Name: usertarget.Target_Name,
+       P2_ID: usertarget.Target_uid,
+       P2_PhotoURL:usertarget.Target_photoURL
+     });
+     setTxtMessage('')
+    return;
+    }
+    if(messages.length != 0){
     const { uid, photoURL,displayName } = auth.currentUser
-     await addDoc(collection(db, 'messages'), {
-      Text: TxtMessage,
-      Name: displayName,
-      created: serverTimestamp(),
-      uid,
-      photoURL
-    });
+    await addDoc(collection(db, 'messages'), {
+     Convo_Id: messages[0].Convo_Id,
+     Text: TxtMessage,
+     Name: displayName,
+     created: serverTimestamp(),
+     uid,
+     photoURL,
+     P1_Name: displayName,
+     P1_ID: uid,
+     P1_PhotoURL:photoURL,
+     P2_Name: usertarget.Target_Name,
+     P2_ID: usertarget.Target_uid,
+     P2_PhotoURL:usertarget.Target_photoURL
+   });
 setTxtMessage('')
+return;
+  }
+  console.log('Message Error')
   }
 
   return (<>
@@ -60,7 +90,7 @@ setTxtMessage('')
 
 function ChatMessage({message}) {
    const messageClass = 
-  message.uid === auth.currentUser.uid
+  message.uid == auth.currentUser.uid
   ? `sent`
   : `received`
   // eslint-disable-next-line

@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"
 import firebase from 'firebase/app';
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where, doc, getDocs} from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where, doc, getDocs,} from 'firebase/firestore'
 import Users from './Users'
 import ChatList from './Chat_list'
 import GroupList from './Group_Chat_List'
@@ -18,17 +18,18 @@ import Chatroom from './Chatroom'
 function Interface(settext) {
   const [menu, setMenu] = useState('Messages');
   const [grouptarget, setGroupTarget] = useState([]);
+  const [usertarget, setUserTarget] = useState([]);
   function changeMenu(event) {
     setMenu(event.target.value)
   }
   function getMenu() {
     switch (menu) {
       // eslint-disable-next-line
-      case 'Messages': return <ChatList/>; break;
+      case 'Messages': return <ChatList setMenu={setMenu} setUserTarget = {setUserTarget}/>; break;
       // eslint-disable-next-line
       case 'Groups': return <GroupList setMenu={setMenu} setGroupTarget={setGroupTarget}/>; break;
       // eslint-disable-next-line
-      case 'Users': return <Users/>; break;
+      case 'Users': return <Users setMenu={setMenu} setUserTarget = {setUserTarget}/>; break;
       // eslint-disable-next-line
       case 'Create Group': return <Create_G setMenu={setMenu}/>; break;
       // eslint-disable-next-line
@@ -36,7 +37,7 @@ function Interface(settext) {
       // eslint-disable-next-line
       case 'Grouproom': return <Grouproom setMenu={setMenu} grouptarget={grouptarget}/>; break;
       // eslint-disable-next-line
-      case 'Chatroom': return <Chatroom setMenu={setMenu}/>; break;
+      case 'Chatroom': return <Chatroom setMenu={setMenu} usertarget={usertarget}/>; break;
       default: return 'Error 404: Page not found';
     }
   }
