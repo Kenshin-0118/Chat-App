@@ -28,7 +28,10 @@ async function CreateGroup() {
       created: serverTimestamp(),
       photoURL,
       uid,
-      Group_ID: id
+      Group_ID: id,
+      Text: 'Group Have Been Created',
+      Sender: displayName,
+      SenderUID: uid
     });
     alert(Name+' Chatroom Created');
     setMenu('Groups')

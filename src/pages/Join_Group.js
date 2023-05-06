@@ -46,7 +46,10 @@ async function JoinGroup() {
           created: serverTimestamp(),
           photoURL,
           uid,
-          Group_ID: Code
+          Group_ID: Code,
+          Text: 'You Have Joined the Group',
+          Sender: displayName,
+          SenderUID: uid
       });
       alert('User added to the group');
       setMenu('Groups')
