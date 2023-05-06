@@ -3,7 +3,7 @@ import { auth, db } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp,where} from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp,where, getDocs, updateDoc} from 'firebase/firestore'
 
 
 function Grouproom({grouptarget}) {
@@ -41,7 +41,20 @@ function Grouproom({grouptarget}) {
       uid,
       photoURL
     });
-setTxtMessage('')
+    const collectionRef = collection(db, "groups");
+    const queryRef = query(collectionRef, where("Group_ID", "==", grouptarget.Group_ID));
+    const querySnapshot = await getDocs(queryRef);
+    querySnapshot.forEach((doc) => {
+      console.log('Doc Ref: '+doc.ref)
+      updateDoc(doc.ref, {
+        created: serverTimestamp(),
+        Text: TxtMessage,
+        Sender: displayName,
+        SenderUID: uid
+      });
+    });
+    
+    setTxtMessage('');
   }
 
   return (<>

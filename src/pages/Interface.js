@@ -27,9 +27,15 @@ function Interface(settext) {
   function limittext(message){
     return String(message).length > 15 ? message.slice(0,15) + " . . . " : message;
   }
-  function LeaveGroup(){
+  async function LeaveGroup(){
     const { uid } = auth.currentUser
-    deleteDoc(query(collection(db,"groups"), where('Group_ID', '==', grouptarget.Group_ID),where('uid', '==', uid)));
+    const collectionRef = collection(db, "groups");
+    const queryRef = query(collectionRef,where('Group_ID', '==', grouptarget.Group_ID),where('uid', '==', uid));
+    const querySnapshot = await getDocs(queryRef);
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref);
+    });
+    setLeave(false)
     setMenu('Groups')
   }
   function getMenu() {
@@ -58,7 +64,7 @@ function Interface(settext) {
       
       </div>
       {menu === 'Groups' ?
-      <div className='w-1/2 flex-grow items-right py-2 px-2 justify-between' >
+      <div className='w-1/2 flex-grow items-right py-4 px-2 justify-between' >
           <button value={'Join Group'} onClick={changeMenu} className='w-2/5 mr-[5px] shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Join
           </button> 
