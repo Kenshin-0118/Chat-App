@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"
 import firebase from 'firebase/app';
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where, doc, getDocs,} from 'firebase/firestore'
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where, doc, getDocs,deleteDoc} from 'firebase/firestore'
 import Users from './Users'
 import ChatList from './Chat_list'
 import GroupList from './Group_Chat_List'
@@ -17,10 +17,20 @@ import Chatroom from './Chatroom'
 
 function Interface(settext) {
   const [menu, setMenu] = useState('Messages');
+  const [leave, setLeave] = useState(false);
   const [grouptarget, setGroupTarget] = useState([]);
   const [usertarget, setUserTarget] = useState([]);
   function changeMenu(event) {
     setMenu(event.target.value)
+    setLeave(false)
+  }
+  function limittext(message){
+    return String(message).length > 15 ? message.slice(0,15) + " . . . " : message;
+  }
+  function LeaveGroup(){
+    const { uid } = auth.currentUser
+    deleteDoc(query(collection(db,"groups"), where('Group_ID', '==', grouptarget.Group_ID),where('uid', '==', uid)));
+    setMenu('Groups')
   }
   function getMenu() {
     switch (menu) {
@@ -43,10 +53,11 @@ function Interface(settext) {
   }
   return (
     <div className="">
-      <div className='flex'>
-      <div className='ml-[30px] w-1/2 flex h-[7vh] font-bold text-white text-left text-4xl  py-3'>{menu}
+      <div className='flex  h-[8vh]'>
+      <div className='ml-[30px] w-1/2 flex font-bold text-white text-left text-4xl  py-3'>{menu === 'Grouproom'? limittext(grouptarget.Group_name): menu}
       
-      </div>{menu === 'Groups' ?
+      </div>
+      {menu === 'Groups' ?
       <div className='w-1/2 flex-grow items-right py-2 px-2 justify-between' >
           <button value={'Join Group'} onClick={changeMenu} className='w-2/5 mr-[5px] shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
             Join
@@ -55,7 +66,29 @@ function Interface(settext) {
             Create
           </button>
         </div> 
-      : null}</div>
+      : null}
+      
+      {menu === 'Grouproom' ?
+      <div className='w-1/2 flex-grow items-right py-2 px-2' >
+
+        {leave? 
+        <div className=' flex-grow items-right py-2 px-2 justify-between' >
+          <button onClick={LeaveGroup} className='w-2/5 mr-[5px] shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+            Confirm
+          </button> 
+          <button onClick={(e) => setLeave(false)} className='w-2/5 ml-[5px] shadow bg-gray-600 hover:bg--500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+            Cancel
+          </button>
+        </div> :
+        <div className=' flex-grow items-right py-2 px-2 justify-between' >
+          <button onClick={(e) => setLeave(true)} className='w-3/5 ml-[10vh] shadow bg-red-600 hover:bg-red-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded'>
+              Leave Group
+          </button>
+        </div> }
+
+        </div> 
+      : null}
+      </div>
         <main className='flex-grow h-[73vh]' >{getMenu()}</main>
         <div className='footer fixed bottom-0 w-full max-w-[720px] py-2 px-2 flex justify-between'>
   <button className='bg-orange-700 w-1/3 h-[8vh] hover:bg-orange-500 rounded' value={'Messages'} onClick={changeMenu} type="submit">Messages</button>

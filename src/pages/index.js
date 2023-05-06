@@ -101,7 +101,7 @@ const Login = () => {
     <>
       <h1>
       In Partial Fulfillment of the Requirements<br/>
-      for the Subject ADV 103<br/><br/>
+      for the Subject WS 101<br/><br/>
       Please Login Using the button in the Upper Right Corner<br/>
       using your Google Account to Enter the ChatRoom 
       </h1>

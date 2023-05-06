@@ -47,6 +47,18 @@ function ChatList({setUserTarget,setMenu}) {
     }
     
 } 
+function getdatetime(timestamp){
+  if(timestamp == null){
+    const text2 = String(Date.now());
+    const text3 = text2.slice(4, 21);
+    return text3;
+  }
+  else if(timestamp != null){
+  const text2 = String((timestamp).toDate());
+  const text3 = text2.slice(4, 21);
+  return text3;
+}
+}
   
     return (
       <div>
@@ -56,18 +68,20 @@ function ChatList({setUserTarget,setMenu}) {
                 {chat.uid == uid ?
       <>
                 <div className='w-1/5'><img className='p-1' src={chat.P2_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
-                <div className='w-4/5'>
+                <div className='w-3/5'>
                   <div className='bold text-2xl text-white'>{chat.P2_Name}</div>
                   <div className='italic text-md text-white'>You: {limittext(chat.Text)}</div>
                 </div>
+                <div className='w-1/5 text-md text-white'><i>{ getdatetime(chat.created)}</i></div>
         </> 
       : 
       <>
       <div className='w-1/5'><img className='p-1' src={chat.P1_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
-      <div className='w-4/5'>
+      <div className='w-3/5'>
         <div className='bold text-2xl text-white'>{chat.P1_Name}</div>
         <div className='italic text-md text-white'><b>{limittext(chat.Text)}</b></div>
       </div>
+      <div className='w-1/5 text-md text-white'><i>{ getdatetime(chat.created)}</i></div>
 </> }
               </li>
             ))}
