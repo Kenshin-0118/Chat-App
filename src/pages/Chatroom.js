@@ -88,10 +88,10 @@ return;
   return (<>
     <main>
 
-      {messages && messages.map((message) => 
+      {messages && messages.map((message,index) => 
       <>
       <div>{message.selected ? <><div ref={autoscroll} id="bottom"/></>: null}</div>
-      <ChatMessage key={message.id} message = {message} setMessages={setMessages} autoscroll = {autoscroll}/>
+      <ChatMessage key={message.id} message = {message} setMessages={setMessages} index={index}/>
       </>)}
 
       <div ref={bottomRef} id="bottom"/>
@@ -109,7 +109,7 @@ return;
   </>)
 }
 
-function ChatMessage({message, setMessages,autoscroll}) {
+function ChatMessage({message, setMessages,}) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [unsent, SetUnsent] = useState(false);
   async function UnsentMessage(message){
@@ -165,7 +165,7 @@ function getdatetime(timestamp){
         {message.selected ?
           unsent ?
           <div>
-            <button  onClick={() => UnsentMessage(message)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>
+            <button  onClick={() => UnsentMessage(message, index)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>
               <i>Confirm</i>
             </button>
             <button onClick={() => SetUnsent(false)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>
@@ -186,7 +186,7 @@ function getdatetime(timestamp){
     <>
 <img src={message.photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/>
       <p>
-        <n><i>{message.Name+" Unsend a message"}</i></n>
+        <n><i>{message.Name+" Unsent a message"}</i></n>
       </p>
     </>}
 

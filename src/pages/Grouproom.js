@@ -61,10 +61,10 @@ function Grouproom({grouptarget}) {
   return (<>
     <main>
 
-      {messages && messages.map((message) => 
+      {messages && messages.map((message, index) => 
       <>
       <div>{message.selected ? <><div ref={autoscroll} id="bottom"/></>: null}</div>
-      <ChatMessage key={message.id} message = {message} setMessages={setMessages} autoscroll = {autoscroll}/>
+      <ChatMessage key={message.id} message = {message} setMessages={setMessages} index = {index} messages = {messages} grouptarget={grouptarget}/>
       </>)}
 
       <div ref={bottomRef} id="bottom"/>
@@ -83,10 +83,10 @@ function Grouproom({grouptarget}) {
 }
 
 
-function ChatMessage({message, setMessages,autoscroll}) {
+function ChatMessage({message, setMessages,messages, index,grouptarget}) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [unsent, SetUnsent] = useState(false);
-  async function UnsentMessage(message){
+  async function UnsentMessage(message,index){
     console.log(message)
     const collectionRef = collection(db, "group_messages");
     const queryRef = query(collectionRef, where("__name__", "==", message.id));
@@ -96,6 +96,18 @@ function ChatMessage({message, setMessages,autoscroll}) {
         Text: deleteField()
       });
     });
+    if(messages.length - 1 == index){
+      const collectionRef = collection(db, "groups");
+      const queryRef = query(collectionRef, where("Group_ID", "==", grouptarget.Group_ID));
+      const querySnapshot = await getDocs(queryRef);
+      querySnapshot.forEach((doc) => {
+        console.log('Doc Ref: '+doc.ref)
+        updateDoc(doc.ref, {
+          created: serverTimestamp(),
+          Text: deleteField()
+        });
+      });
+    }
   }
    const messageClass = 
   message.uid == auth.currentUser.uid
@@ -139,7 +151,7 @@ function getdatetime(timestamp){
         {message.selected ?
           unsent ?
           <div>
-            <button  onClick={() => UnsentMessage(message)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>
+            <button  onClick={() => UnsentMessage(message, index)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>
               <i>Confirm</i>
             </button>
             <button onClick={() => SetUnsent(false)} className='text-sm w-[70px] ml-[5px] shadow bg-gray-600 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-bold py-1 px-1 rounded'>

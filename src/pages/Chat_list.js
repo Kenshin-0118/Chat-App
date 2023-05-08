@@ -70,7 +70,7 @@ function getdatetime(timestamp){
                 <div className='w-1/5'><img className='p-1' src={chat.P2_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
                 <div className='w-3/5'>
                   <div className='bold text-2xl text-white'>{chat.P2_Name}</div>
-                  <div className='italic text-md text-white'>You: {chat.Text?limittext(chat.Text):'Unsend a message'}</div>
+                  <div className='italic text-md text-white'>You: {chat.Text?limittext(chat.Text):'Unsent a message'}</div>
                 </div>
                 <div className='w-1/5 text-md text-white'><i>{ getdatetime(chat.created)}</i></div>
         </> 
@@ -79,7 +79,7 @@ function getdatetime(timestamp){
       <div className='w-1/5'><img className='p-1' src={chat.P1_PhotoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='Failed to Load'/></div>
       <div className='w-3/5'>
         <div className='bold text-2xl text-white'>{chat.P1_Name}</div>
-        <div className='italic text-md text-white'><b>{chat.Text?limittext(chat.Text):'Unsend a message'}</b></div>
+        <div className='italic text-md text-white'><b>{chat.Text?limittext(chat.Text):'Unsent a message'}</b></div>
       </div>
       <div className='w-1/5 text-md text-white'><i>{ getdatetime(chat.created)}</i></div>
 </> }
