@@ -43,7 +43,7 @@ async function CreateGroup() {
   return (
     <div className="text-xl flex justify-center flex-col items-center h-full w-full">
       <div className="text-2xl font-bold flex justify-center flex-col items-center text-gray-500">Create New Group By<br/>Filling up Fields Below</div><br/>
-        <input className=" w-[450px] shadow pb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="gname" placeholder="Group Name" onChange={(e) => setName(e.target.value)} id="username" type="text"/>
+        <input className=" w-[450px] shadow pb-2 appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" name="gname" placeholder="Group Name" onChange={(e) => setName(e.target.value)} id="username" type="text"/>
         <button onClick={CreateGroup} value={Name} className=" w-[200px] mt-3 shadow bg-orange-600 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold rounded flex justify-center" type="button">
             Create Group
         </button>

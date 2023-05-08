@@ -142,11 +142,9 @@ body {
   
   
   .sent p {
-    color: white;
     background: #ee5c08;
-    align-self: flex-end;
+    color: white;
     font-size: 20px;
-    height: auto;
     padding: 5px;
     border-radius: 5px;
     max-width: 60%;
