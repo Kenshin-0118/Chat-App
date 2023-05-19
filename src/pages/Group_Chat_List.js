@@ -50,7 +50,7 @@ function Groups({setMenu,setGroupTarget}) {
     .then(() => {
       // Show a popup message
       const popup = document.createElement('li');
-      popup.textContent = 'Group Id copied to clipboard: ' + groupId;
+      popup.textContent = Group.Group_Name+"'s Group Id have been copied to clipboard";
       popup.classList.add('popup');
       document.body.appendChild(popup);
 
