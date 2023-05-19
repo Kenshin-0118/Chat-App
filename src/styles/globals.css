@@ -169,3 +169,15 @@ body {
     margin: 2px 5px;
   }
     
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #242323;
+    border: 1px solid #ff9100;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 9999;
+  }

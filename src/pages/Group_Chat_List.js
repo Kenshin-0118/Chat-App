@@ -43,11 +43,32 @@ function Groups({setMenu,setGroupTarget}) {
       setGroupTarget({Group_name: Group.Group_Name, Group_ID: Group.Group_ID, index: index})
       setMenu('Grouproom')
   } 
+
+  const GetGroupId=(Group)=>{ 
+    const groupId = Group.Group_ID.toString();
+    navigator.clipboard.writeText(groupId)
+    .then(() => {
+      // Show a popup message
+      const popup = document.createElement('li');
+      popup.textContent = 'Group Id copied to clipboard: ' + groupId;
+      popup.classList.add('popup');
+      document.body.appendChild(popup);
+
+      // Automatically hide the popup after a certain time (e.g., 3 seconds)
+      setTimeout(() => {
+        popup.remove();
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error("Failed to copy Group Id:", error);
+    });
+  } 
+  
   
     return (
       <div className=''>        
       {Groups.map((group,index) => (
-        <li className='bg-neutral-800 text-white rounded-lg mr-3 ml-3 mb-3 items-center flex px-4 py-4' key={group.Group_ID}>
+        <li onDoubleClick={() => GetGroupId(group)} className='bg-neutral-800 text-white rounded-lg mr-3 ml-3 mb-3 items-center flex px-4 py-4' key={group.Group_ID}>
           <div className='w-2/3'>
             <div className='bold text-2xl'>{group.Group_Name}</div>
             <div className='italic text-md'>{group.SenderUID == auth.currentUser.uid?limittext('You: '+(group.Text ? group.Text : 'Unsent a Message')) : <b>{limittext(group.Sender+': '+(group.Text ? group.Text : 'Unsent a Message'))}</b> }<br/>{getdatetime(group.created)}</div>
