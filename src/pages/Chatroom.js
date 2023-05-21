@@ -91,7 +91,7 @@ return;
       {messages && messages.map((message,index) => 
       <>
       <div>{message.selected ? <><div ref={autoscroll} id="bottom"/></>: null}</div>
-      <ChatMessage key={message.id} message = {message} setMessages={setMessages} index={index}/>
+      <ChatMessage key={message.id} message = {message} index = {index} setMessages={setMessages} index={index}/>
       </>)}
 
       <div ref={bottomRef} id="bottom"/>
@@ -109,7 +109,7 @@ return;
   </>)
 }
 
-function ChatMessage({message, setMessages,}) {
+function ChatMessage({message, setMessages,index}) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [unsent, SetUnsent] = useState(false);
   async function UnsentMessage(message){
