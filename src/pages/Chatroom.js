@@ -91,7 +91,7 @@ return;
       {messages && messages.map((message,index) => 
       <>
       <div>{message.selected ? <><div ref={autoscroll} id="bottom"/></>: null}</div>
-      <ChatMessage key={message.id} message = {message} index = {index} setMessages={setMessages} index={index}/>
+      <ChatMessage key={message.id} message = {message} index = {index} setMessages={setMessages}/>
       </>)}
 
       <div ref={bottomRef} id="bottom"/>
