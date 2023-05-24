@@ -1,4 +1,4 @@
 Members:
-Jazzy Dela Torre
-Kenneth Candia 
-Norhasan Maruhom
+<br/>Jazzy Dela Torre
+<br/>Kenneth Candia 
+<br/>Norhasan Maruhom
