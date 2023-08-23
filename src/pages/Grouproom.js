@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect} from 'react'
-import { auth, db } from './firebase'
+import { auth, db } from '../config/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
 import GoogleButton from "react-google-button"

@@ -1,4 +1,4 @@
-import { auth,db } from './firebase'
+import { auth,db } from '..config/firebase'
 import React, { useRef, useState, useEffect} from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { GoogleAuthProvider, signInWithPopup} from "firebase/auth"
